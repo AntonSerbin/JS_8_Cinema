@@ -1,18 +1,18 @@
-let inputStr = document.querySelector(`#inputStr`);
-let inputSearch = document.querySelector(`#inputSearch`);
-let result = document.querySelector(`#result`);
-const popularButton = document.querySelector(`#popularButton`);
-const latestButton = document.querySelector(`#latestButton`);
-const topRatedButton = document.querySelector(`#topRatedButton`);
+const inputStr = document.querySelector("#inputStr");
+const inputSearch = document.querySelector("#inputSearch");
+const result = document.querySelector("#result");
+const popularButton = document.querySelector("#popularButton");
+const latestButton = document.querySelector("#latestButton");
+const topRatedButton = document.querySelector("#topRatedButton");
 
 //создаем строку запроса
-const link=`https://api.themoviedb.org/3`;
-const searchFolder=`/search/movie`
-const api_key= `f24a0fd18f52218851075901c5a108a0`;
-let request = "&query=";
-let popular_request=`/movie/popular`;
-let latest=`/movie/upcoming`;
-let top_rated=`/movie/top_rated`;
+const link="https://api.themoviedb.org/3";
+const searchFolder="/search/movie"
+const api_key= "f24a0fd18f52218851075901c5a108a0";
+const request = "&query=";
+const popular_request="/movie/popular";
+const latest="/movie/upcoming";
+const top_rated="/movie/top_rated";
 
 
 
@@ -27,10 +27,7 @@ const getJSON = (requestLink)=>
 			response.statusText
 			);
 		})
-		.then(data=>{   //выбираем массив
-			return data.results;
-
-		})
+		.then(data=>data.results)  //получаем массив
 		.catch(error => console.log(error)
 		);
 
@@ -61,7 +58,7 @@ const makeGallery = (imageStr)=> {
 
 inputSearch.addEventListener("submit",(event)=>{
 	event.preventDefault();
-	const searchRequest = `${link}${searchFolder}?api_key=${api_key}&page=1&${request}` + inputStr.value;
+	const searchRequest = `${link}${searchFolder}?api_key=${api_key}&page=1&${request}${inputStr.value}`;
 	if (inputStr.value) {
 		getJSON(searchRequest)
 		.then(data=>{
@@ -75,29 +72,21 @@ inputSearch.addEventListener("submit",(event)=>{
 popularButton.addEventListener("click",(event)=>{
 	const searchRequest = `${link}${popular_request}?api_key=${api_key}&page=1&`;
 	getJSON(searchRequest)
-		.then(data=>{
-			makeGallery(data);
-		});
+		.then(data=>makeGallery(data));
 });
 
 latestButton.addEventListener("click",(event)=>{
 	const searchRequest = `${link}${latest}?api_key=${api_key}&language=en-US`;
 	getJSON(searchRequest)
-		.then(data=>{
-			makeGallery(data);
-		});
+		.then(data=>makeGallery(data));
 });
 topRatedButton.addEventListener("click",(event)=>{
 	const searchRequest = `${link}${top_rated}?api_key=${api_key}&page=1`;
 	getJSON(searchRequest)
-		.then(data=>{
-			makeGallery(data);
-		});
+		.then(data=>makeGallery(data));
 });
 
 //начальная страница
 const searchRequest = `${link}${latest}?api_key=${api_key}&language=en-US`;
 	getJSON(searchRequest)
-		.then(data=>{
-			makeGallery(data);
-		});
+		.then(data=>makeGallery(data));
